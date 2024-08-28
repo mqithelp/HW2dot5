@@ -9,10 +9,7 @@ public class Employee {
     private final String surname;
     private final String name;
 
-    public Employee(String surname, String name, String patronymic, int department, int salary) {
-        if (department < 1 || department > 5) {
-            department = 1;
-        }
+    public Employee(String surname, String name) {
         this.name = name;
         this.surname = surname;
         id = count;
@@ -37,7 +34,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(name, employee.name) && Objects.equals(surname, employee.surname));
+        return Objects.equals(name, employee.name) && Objects.equals(surname, employee.surname);
 
     }
 
