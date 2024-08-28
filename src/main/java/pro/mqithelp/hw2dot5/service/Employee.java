@@ -1,7 +1,8 @@
-package pro.mqithelp.hw2dot5;
+package pro.mqithelp.hw2dot5.service;
+
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-
 
 public class Employee {
     private static int count;
@@ -15,7 +16,6 @@ public class Employee {
         id = count;
         count++;
     }
-
 
     public int getId() {
         return id;

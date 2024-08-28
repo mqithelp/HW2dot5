@@ -1,4 +1,6 @@
 package pro.mqithelp.hw2dot5.service;
 
-public class EmployeeService {
+public interface EmployeeService {
+    String getFullName();
+    Employee createEmployee(String name, String surname);
 }
