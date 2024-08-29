@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String removeEmployee(String name, String surname) {
         Employee person = new Employee(name, surname);
         int indexDelPerson = employees.indexOf(person);
-        if (indexDelPerson > 0) {
+        if (indexDelPerson > -1) {
             employees.remove(indexDelPerson);
             return "Сотрудник " + new Gson().toJson(person) + " удалён.";
         }
@@ -54,8 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String allEmployee() {
-        String json = new Gson().toJson(employees);
-        return "Наши сотрудники: \n" + json;
+        return "Наши сотрудники: \n" + new Gson().toJson(employees);
     }
 
     private void initEmployee(List<Employee> employees) {

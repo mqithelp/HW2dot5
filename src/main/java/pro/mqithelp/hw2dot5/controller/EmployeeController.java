@@ -28,7 +28,7 @@ public class EmployeeController {
         try {
             return employeeService.addEmployee(name, surname);
         } catch (EmployeeArrayIsFull e) {
-            return "Массив полон";
+            return "Массив полон.";
         } catch (EmployeeAlreadyAddedException e) {
             return "Сотрудник уже есть.\n" + name + " " + surname;
         }
