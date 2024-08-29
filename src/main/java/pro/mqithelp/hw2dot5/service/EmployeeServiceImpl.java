@@ -19,6 +19,26 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees.get(index).toString();
     }
 
+    @Override
+    public String removeEmployee(String name, String surname) {
+        return "Удаляем сотрудника " + name + " " + surname;
+    }
+
+    @Override
+    public String addEmployee(String name, String surname) {
+        return "Добавляем сотрудника " + name + " " + surname;
+    }
+
+    @Override
+    public String findEmployee(String name, String surname) {
+        return "Ищем сотрудника " + name + " " + surname;
+    }
+
+    @Override
+    public String allEmployee() {
+        return "Наши сотрудники: \n" + employees;
+    }
+
     private void initEmployee(List<Employee> employees) {
         employees.add(new Employee("Bill", "Gates"));
         employees.add(new Employee("Steve","Jobs"));
