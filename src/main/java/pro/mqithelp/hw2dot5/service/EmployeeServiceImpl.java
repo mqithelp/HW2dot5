@@ -11,8 +11,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee.toString();
     }
 
-    @Override
-    public Employee createEmployee(String name, String surname) {
-        return new Employee(name, surname);
-    }
 }
