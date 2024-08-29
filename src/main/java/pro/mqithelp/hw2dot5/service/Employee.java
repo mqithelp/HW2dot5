@@ -8,7 +8,7 @@ public class Employee {
     private final String surname;
     private final String name;
 
-    public Employee(String surname, String name) {
+    public Employee(String name, String surname) {
         this.name = name;
         this.surname = surname;
     }
@@ -37,7 +37,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "ФИО: " + surname + ' ' + name + '.';
+        return "ФИО: " + name + ' ' + surname + '.';
     }
 
 }
