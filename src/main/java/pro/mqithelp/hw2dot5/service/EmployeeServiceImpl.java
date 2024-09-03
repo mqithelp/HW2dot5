@@ -2,54 +2,54 @@ package pro.mqithelp.hw2dot5.service;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
-import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
-import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
-import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private List<Employee> employees = new ArrayList<>();
+    private Map<Integer, Employee> employees = new HashMap<>();
 
-    public EmployeeServiceImpl(List<Employee> employees) {
-        initEmployee(employees);
-        this.employees = employees;
+    public EmployeeServiceImpl() {
+        this.employees = AppConfig.initEmployee();
     }
 
     @Override
     public String removeEmployee(String name, String surname) {
         Employee person = new Employee(name, surname);
-        int indexDelPerson = employees.indexOf(person);
-        if (indexDelPerson > -1) {
-            employees.remove(indexDelPerson);
-            return "Сотрудник " + new Gson().toJson(person) + " удалён.";
-        }
-        throw new EmployeeNotFoundException();
+        if
+        employees.remove(person);
+//        int indexDelPerson = employees.indexOf(person);
+//        if (indexDelPerson > -1) {
+//            employees.remove(indexDelPerson);
+//            return "Сотрудник " + new Gson().toJson(person) + " удалён.";
+//        }
+//        throw new EmployeeNotFoundException();
+        return  "removed employee";
     }
 
     @Override
     public String addEmployee(String name, String surname) {
-        if (employees.size() >= MAX_EMPLYEE) {
-            throw new EmployeeArrayIsFull();
-        }
-        Employee person = new Employee(name, surname);
-        if (employees.indexOf(person) == -1) {
-            employees.add(person);
-            return "Сотрудник добавлен:\n" + new Gson().toJson(person);
-        }
-        throw new EmployeeAlreadyAddedException();
+//        if (employees.size() >= MAX_EMPLYEE) {
+//            throw new EmployeeArrayIsFull();
+//        }
+//        Employee person = new Employee(name, surname);
+//        if (employees.indexOf(person) == -1) {
+//            employees.add(person);
+//            return "Сотрудник добавлен:\n" + new Gson().toJson(person);
+//        }
+//        throw new EmployeeAlreadyAddedException();
+        return  "added employee";
     }
 
     @Override
     public String findEmployee(String name, String surname) {
-        Employee person = new Employee(name, surname);
-        if (employees.indexOf(person) > -1) {
-            return "Сотрудник найден:\n" + new Gson().toJson(person);
-        }
-        throw new EmployeeNotFoundException();
+//        Employee person = new Employee(name, surname);
+//        if (employees.indexOf(person) > -1) {
+//            return "Сотрудник найден:\n" + new Gson().toJson(person);
+//        }
+//        throw new EmployeeNotFoundException();
+        return  "found employee";
     }
 
     @Override
@@ -57,16 +57,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         return "Наши сотрудники: \n" + new Gson().toJson(employees);
     }
 
-    private void initEmployee(List<Employee> employees) {
-        employees.add(new Employee("Bill", "Gates"));
-        employees.add(new Employee("Steve", "Jobs"));
-        employees.add(new Employee("Mark", "Zuckerberg"));
-        employees.add(new Employee("Jeff", "Bezos"));
-        employees.add(new Employee("Larry", "Page"));
-        employees.add(new Employee("Sergey", "Brin"));
-        employees.add(new Employee("Elon", "Musk"));
-        employees.add(new Employee("Satya", "Nadella"));
-        employees.add(new Employee("Tim", "Cook"));
-        employees.add(new Employee("Eric", "Schmidt"));
-    }
 }
