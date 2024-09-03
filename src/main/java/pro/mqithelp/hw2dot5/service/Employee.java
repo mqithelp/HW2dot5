@@ -8,9 +8,24 @@ public class Employee {
     private final String surname;
     private final String name;
 
-    public Employee(String name, String surname) {
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getPassport() {
+        return passport;
+    }
+
+    private Integer passport;
+
+    public Employee(String name, String surname, Integer passport) {
         this.name = name;
         this.surname = surname;
+        this.passport = passport;
     }
 
     @Override
@@ -29,7 +44,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return name + " " + surname + ". \n";
+        return name + " " + surname + " Паспорт: " + getPassport() + " \n";
     }
 
 }

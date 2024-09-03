@@ -15,9 +15,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String removeEmployee(String name, String surname) {
-        Employee person = new Employee(name, surname);
-        if
+    public String removeEmployee(String name, String surname, Integer passportNumber) {
+        Employee person = new Employee(name, surname,passportNumber);
+
         employees.remove(person);
 //        int indexDelPerson = employees.indexOf(person);
 //        if (indexDelPerson > -1) {
@@ -29,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String addEmployee(String name, String surname) {
+    public String addEmployee(String name, String surname, Integer passportNumber) {
 //        if (employees.size() >= MAX_EMPLYEE) {
 //            throw new EmployeeArrayIsFull();
 //        }
@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String findEmployee(String name, String surname) {
+    public String findEmployee(String name, String surname, Integer passportNumber) {
 //        Employee person = new Employee(name, surname);
 //        if (employees.indexOf(person) > -1) {
 //            return "Сотрудник найден:\n" + new Gson().toJson(person);

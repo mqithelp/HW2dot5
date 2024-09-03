@@ -24,9 +24,11 @@ public class EmployeeController {
     }
 
     @GetMapping("add")
-    public String add(@RequestParam("firstName") String name, @RequestParam("lastName") String surname) {
+    public String add(@RequestParam("firstName") String name,
+                      @RequestParam("lastName") String surname,
+                      @RequestParam("passport") Integer passportNumber) {
         try {
-            return employeeService.addEmployee(name, surname);
+            return employeeService.addEmployee(name, surname,passportNumber);
         } catch (EmployeeArrayIsFull e) {
             return "Массив полон.";
         } catch (EmployeeAlreadyAddedException e) {
@@ -35,18 +37,22 @@ public class EmployeeController {
     }
 
     @GetMapping("remove")
-    public String remove(@RequestParam("firstName") String name, @RequestParam("lastName") String surname) {
+    public String remove(@RequestParam("firstName") String name,
+                         @RequestParam("lastName") String surname,
+                         @RequestParam("passport") Integer passportNumber) {
         try {
-            return employeeService.removeEmployee(name, surname);
+            return employeeService.removeEmployee(name, surname, passportNumber);
         } catch (EmployeeNotFoundException e) {
             return "Сотрудник не найден. \n" + name + " " + surname;
         }
     }
 
     @GetMapping("find")
-    public String find(@RequestParam("firstName") String name, @RequestParam("lastName") String surname) {
+    public String find(@RequestParam("firstName") String name,
+                       @RequestParam("lastName") String surname,
+                        @RequestParam("passport") Integer passportNumber) {
         try {
-            return employeeService.findEmployee(name, surname);
+            return employeeService.findEmployee(name, surname, passportNumber);
         } catch (EmployeeNotFoundException e) {
             return "Сотрудник не найден. \n" + name + " " + surname;
         }
