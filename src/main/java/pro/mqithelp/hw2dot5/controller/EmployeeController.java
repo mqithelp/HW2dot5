@@ -25,36 +25,35 @@ public class EmployeeController {
 
     @GetMapping("add")
     public String add(@RequestParam("firstName") String name,
-                      @RequestParam("lastName") String surname,
-                      @RequestParam("passport") Integer passportNumber) {
+                      @RequestParam("lastName") String surname) {
         try {
-            return employeeService.addEmployee(name, surname,passportNumber);
-        } catch (EmployeeArrayIsFull e) {
-            return "Массив полон.";
+            return employeeService.addEmployee(name, surname);
+
         } catch (EmployeeAlreadyAddedException e) {
-            return "Сотрудник уже есть.\n" + name + " " + surname;
+            return "Сотрудник уже есть.\n";
+        } catch (EmployeeArrayIsFull e) {
+            return "В базе нет места.";
         }
     }
 
     @GetMapping("remove")
-    public String remove(@RequestParam("firstName") String name,
-                         @RequestParam("lastName") String surname,
-                         @RequestParam("passport") Integer passportNumber) {
+    public String remove(
+            @RequestParam("firstName") String name,
+            @RequestParam("lastName") String surname) {
         try {
-            return employeeService.removeEmployee(name, surname, passportNumber);
+            return employeeService.removeEmployee(name, surname);
         } catch (EmployeeNotFoundException e) {
-            return "Сотрудник не найден. \n" + name + " " + surname;
+            return "Сотрудник не найден. \n";
         }
     }
 
     @GetMapping("find")
     public String find(@RequestParam("firstName") String name,
-                       @RequestParam("lastName") String surname,
-                        @RequestParam("passport") Integer passportNumber) {
+                       @RequestParam("lastName") String surname) {
         try {
-            return employeeService.findEmployee(name, surname, passportNumber);
+            return employeeService.findEmployee(name, surname);
         } catch (EmployeeNotFoundException e) {
-            return "Сотрудник не найден. \n" + name + " " + surname;
+            return "Сотрудник не найден. \n";
         }
     }
 

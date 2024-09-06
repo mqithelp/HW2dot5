@@ -2,59 +2,62 @@ package pro.mqithelp.hw2dot5.service;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
+import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
+import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
+import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
+
 import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
-    private Map<Integer, Employee> employees = new HashMap<>();
+    private String fullNameKey = "";
+    private final Map<String, Employee> employees;
 
     public EmployeeServiceImpl() {
         this.employees = AppConfig.initEmployee();
     }
 
     @Override
-    public String removeEmployee(String name, String surname, Integer passportNumber) {
-        Employee person = new Employee(name, surname,passportNumber);
+    public String removeEmployee(String name, String surname) {
+        setFullNameKey(name, surname);
+        if (employees.containsKey(fullNameKey)) {
+            employees.remove(fullNameKey);
+            return "Сотрудник " + fullNameKey + " удалён. \n" + allEmployee();
+        }
+        throw new EmployeeNotFoundException();
 
-        employees.remove(person);
-//        int indexDelPerson = employees.indexOf(person);
-//        if (indexDelPerson > -1) {
-//            employees.remove(indexDelPerson);
-//            return "Сотрудник " + new Gson().toJson(person) + " удалён.";
-//        }
-//        throw new EmployeeNotFoundException();
-        return  "removed employee";
     }
 
     @Override
-    public String addEmployee(String name, String surname, Integer passportNumber) {
-//        if (employees.size() >= MAX_EMPLYEE) {
-//            throw new EmployeeArrayIsFull();
-//        }
-//        Employee person = new Employee(name, surname);
-//        if (employees.indexOf(person) == -1) {
-//            employees.add(person);
-//            return "Сотрудник добавлен:\n" + new Gson().toJson(person);
-//        }
-//        throw new EmployeeAlreadyAddedException();
-        return  "added employee";
+    public String addEmployee(String name, String surname) {
+        if (employees.size()  >= MAX_EMPLYEE) {
+            throw new EmployeeArrayIsFull();
+        }
+        setFullNameKey(name, surname);
+        if (!employees.containsKey(fullNameKey)) {
+            Employee person = new Employee(name, surname);
+            employees.put(fullNameKey, person);
+            return "Сотрудник добавлен:\n" + new Gson().toJson(person) + "\n" + allEmployee();
+        }
+        throw new EmployeeAlreadyAddedException();
     }
 
     @Override
-    public String findEmployee(String name, String surname, Integer passportNumber) {
-//        Employee person = new Employee(name, surname);
-//        if (employees.indexOf(person) > -1) {
-//            return "Сотрудник найден:\n" + new Gson().toJson(person);
-//        }
-//        throw new EmployeeNotFoundException();
-        return  "found employee";
+    public String findEmployee(String name, String surname) {
+        setFullNameKey(name, surname);
+        if (employees.containsKey(fullNameKey)) {
+            return "Сотрудник найден:\n" + new Gson().toJson(fullNameKey) + "\n" + allEmployee();
+        }
+        throw new EmployeeNotFoundException();
     }
 
     @Override
     public String allEmployee() {
         return "Наши сотрудники: \n" + new Gson().toJson(employees);
+    }
+
+    private void setFullNameKey(String name, String surname) {
+        fullNameKey = name + " " + surname;
     }
 
 }

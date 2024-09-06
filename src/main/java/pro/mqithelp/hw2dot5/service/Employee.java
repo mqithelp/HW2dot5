@@ -1,32 +1,15 @@
 package pro.mqithelp.hw2dot5.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.Objects;
 
 public class Employee {
     private final String surname;
     private final String name;
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getPassport() {
-        return passport;
-    }
-
-    private Integer passport;
-
-    public Employee(String name, String surname, Integer passport) {
-        this.name = name;
-        this.surname = surname;
-        this.passport = passport;
-    }
+      public Employee(String name, String surname) {
+          this.name = name;
+          this.surname = surname;
+      }
 
     @Override
     public boolean equals(Object o) {
@@ -44,7 +27,10 @@ public class Employee {
 
     @Override
     public String toString() {
-        return name + " " + surname + " Паспорт: " + getPassport() + " \n";
+        return name + " " + surname;
+    }
+    public String getFullNameKey() {
+        return toString();
     }
 
 }
