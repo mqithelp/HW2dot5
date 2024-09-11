@@ -11,4 +11,11 @@ public interface EmployeeService {
 
     String allEmployee();
 
+    String getMaxSalaryByDepartment(Integer departmentId);
+
+    String getMinSalaryByDepartment(Integer departmentId);
+
+    String getAll(Integer departmentId);
+
+    String getAll();
 }

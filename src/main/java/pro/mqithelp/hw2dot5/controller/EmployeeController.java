@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
+import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
 import pro.mqithelp.hw2dot5.service.EmployeeService;
 
@@ -57,4 +58,33 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("max-salary")
+    public String getMaxSalary(@RequestParam("departmentId") Integer departmentId) {
+        try {
+            return employeeService.getMaxSalaryByDepartment(departmentId);
+        } catch (EmployeeDepartmentNotFoundException e) {
+            return "Департамент не найден.";
+        }
+    }
+
+    @GetMapping("min-salary")
+    public String getMinSalary(@RequestParam("departmentId") Integer departmentId) {
+        try {
+            return employeeService.getMinSalaryByDepartment(departmentId);
+        } catch (EmployeeDepartmentNotFoundException e) {
+            return "Департамент не найден.";
+        }
+    }
+
+    @GetMapping("all")
+    public String getAll(@RequestParam(value = "departmentId", required = false) Integer departmentId) {
+        if (departmentId != null) {
+            try {
+                return employeeService.getAll(departmentId);
+            } catch (EmployeeDepartmentNotFoundException e) {
+                return "Департамент не найден.";
+            }
+        }
+        return employeeService.getAll();
+    }
 }

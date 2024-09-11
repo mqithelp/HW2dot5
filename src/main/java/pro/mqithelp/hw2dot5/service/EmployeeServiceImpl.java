@@ -4,9 +4,14 @@ import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
+import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -30,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String addEmployee(String name, String surname) {
-        if (employees.size()  >= MAX_EMPLYEE) {
+        if (employees.size() >= MAX_EMPLYEE) {
             throw new EmployeeArrayIsFull();
         }
         setFullNameKey(name, surname);
@@ -56,8 +61,60 @@ public class EmployeeServiceImpl implements EmployeeService {
         return "Наши сотрудники: \n" + new Gson().toJson(employees);
     }
 
-    private void setFullNameKey(String name, String surname) {
-        fullNameKey = name + " " + surname;
+    @Override
+    public String getMaxSalaryByDepartment(Integer departmentId) {
+        int indexMaxSalary;
+        String result;
+        List<Employee> salaryList =
+                employees.entrySet()
+                        .stream()
+                        .map(Map.Entry::getValue)
+                        .filter(e -> e.getDepartmentId() == departmentId)
+                        .sorted(Comparator.comparingInt(Employee::getSalary))
+                        .collect(Collectors.toList());
+
+        if (salaryList.size() == 0) throw new EmployeeDepartmentNotFoundException();
+        indexMaxSalary = salaryList.size() - 1;
+        result = "Сотрудники отдела " + departmentId + ":\n" + salaryList;
+        return "Максимальная зарплата в отделе " + departmentId + " у " + salaryList.get(indexMaxSalary) + " - \n " + result;
     }
+
+    @Override
+    public String getMinSalaryByDepartment(Integer departmentId) {
+        String result;
+        List<Employee> salaryList =
+                employees.entrySet()
+                        .stream()
+                        .map(Map.Entry::getValue)
+                        .filter(e -> e.getDepartmentId() == departmentId)
+                        .sorted(Comparator.comparingInt(Employee::getSalary))
+                        .collect(Collectors.toList());
+
+        if (salaryList.size() == 0) throw new EmployeeDepartmentNotFoundException();
+        result = "Сотрудники отдела " + departmentId + ":\n" + salaryList;
+        return "Минимальная зарплата в отделе " + departmentId + " у " + salaryList.get(0) + " - \n " + result;
+    }
+
+    @Override
+    public String getAll(Integer departmentId) {
+        return "all" + departmentId;
+    }
+
+    @Override
+    public String getAll() {
+        String result = employees.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .sorted(Comparator.comparingInt(Employee::getDepartmentId))
+                .collect(Collectors.groupingBy(Employee::getDepartmentId,Collectors.mapping(Employee::getByDepartment,Collectors.joining()))).toString();
+               //.map(e -> e.getByDepartment()).collect(Collectors.joining(" === "));
+//                .collect(Collectors.toList()
+return result;
+    }
+
+    private void setFullNameKey(String name, String surname) {
+        fullNameKey = name + surname + "Key";
+    }
+
 
 }
