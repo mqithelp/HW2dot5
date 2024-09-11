@@ -90,14 +90,28 @@ public class EmployeeServiceImpl implements EmployeeService {
                         .sorted(Comparator.comparingInt(Employee::getSalary))
                         .collect(Collectors.toList());
 
-        if (salaryList.size() == 0) throw new EmployeeDepartmentNotFoundException();
+        if (salaryList.size() == 0) {
+            throw new EmployeeDepartmentNotFoundException();
+        }
         result = "Сотрудники отдела " + departmentId + ":\n" + salaryList;
         return "Минимальная зарплата в отделе " + departmentId + " у " + salaryList.get(0) + " - \n " + result;
     }
 
     @Override
     public String getAll(Integer departmentId) {
-        return "all" + departmentId;
+        List<Employee> salaryList =
+                employees.entrySet()
+                        .stream()
+                        .map(Map.Entry::getValue)
+                        .filter(e -> e.getDepartmentId() == departmentId)
+                        .sorted(Comparator.comparingInt(Employee::getDepartmentId))
+                        .collect(Collectors.toList());
+
+        if (salaryList.size() == 0) {
+            throw new EmployeeDepartmentNotFoundException();
+        }
+        return "Сотрудники отдела " + departmentId + ":\n" + salaryList;
+
     }
 
     @Override
@@ -106,10 +120,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .stream()
                 .map(Map.Entry::getValue)
                 .sorted(Comparator.comparingInt(Employee::getDepartmentId))
-                .collect(Collectors.groupingBy(Employee::getDepartmentId,Collectors.mapping(Employee::getByDepartment,Collectors.joining()))).toString();
-               //.map(e -> e.getByDepartment()).collect(Collectors.joining(" === "));
+                .collect(Collectors.groupingBy(Employee::getDepartmentId, Collectors.mapping(Employee::getByDepartment, Collectors.joining()))).toString();
+        //.map(e -> e.getByDepartment()).collect(Collectors.joining(" === "));
 //                .collect(Collectors.toList()
-return result;
+        return result;
     }
 
     private void setFullNameKey(String name, String surname) {
