@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pro.mqithelp.hw2dot5.component.EmployeeData;
 import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
-import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
 
 @Service

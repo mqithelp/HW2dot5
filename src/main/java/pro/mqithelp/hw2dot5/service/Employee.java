@@ -28,8 +28,8 @@ public class Employee {
         this.surname = surname;
         this.name = name;
         Random random = new Random();
-        this.departmentId =  random.nextInt(7 - 1) + 1;
-        this.salary = random.nextInt(200000 - 99999) + 99999;;
+        this.departmentId = random.nextInt(7 - 1) + 1;
+        this.salary = random.nextInt(200000 - 99999) + 99999;
     }
 
     @Override
@@ -50,11 +50,13 @@ public class Employee {
     public String toString() {
         return name + " " + surname + ". Отдел: " + departmentId + ". Зарплата: " + salary;
     }
+
     public String getFullNameKey() {
         return name + surname + "Key";
     }
+
     public String getByDepartment() {
-        return name +" "+ surname + " зарплата " + salary + "\n";
+        return name + " " + surname + " зарплата " + salary + "\n";
     }
 
 }

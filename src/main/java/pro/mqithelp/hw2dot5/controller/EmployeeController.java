@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
-import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
 import pro.mqithelp.hw2dot5.service.EmployeeService;
 

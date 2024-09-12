@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 import pro.mqithelp.hw2dot5.service.DepartmentService;
-import pro.mqithelp.hw2dot5.service.EmployeeService;
 
 @RestController
 @RequestMapping(path = "/departments")
@@ -16,6 +15,7 @@ private final DepartmentService departmentService;
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
+
     @GetMapping("max-salary")
     public String getMaxSalary(@RequestParam("departmentId") Integer departmentId) {
         try {

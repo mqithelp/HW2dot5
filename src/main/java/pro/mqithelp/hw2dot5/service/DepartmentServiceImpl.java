@@ -23,6 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .sorted(Comparator.comparingInt(Employee::getDepartmentId))
                 .collect(Collectors.groupingBy(Employee::getDepartmentId, Collectors.mapping(Employee::getByDepartment, Collectors.joining()))).toString();
     }
+
     @Override
     public String getAll(Integer departmentId) {
         List<Employee> salaryList =
@@ -38,6 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return "Сотрудники отдела " + departmentId + ":\n" + salaryList;
 
     }
+
     @Override
     public String getMaxSalaryByDepartment(Integer departmentId) {
         int indexMaxSalary;
