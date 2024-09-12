@@ -1,16 +1,27 @@
-package pro.mqithelp.hw2dot5.service;
+package pro.mqithelp.hw2dot5.component;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
+import pro.mqithelp.hw2dot5.service.Employee;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@Configuration
-public class AppConfig {
-    @Bean
-    public static Map<String, Employee> initEmployee() {
+@Component
+public class EmployeeData {
+    //    private Map<String, Employee> employees;
+    private Map<String, Employee> employees = new HashMap<>();
 
+
+    public Map<String, Employee> getEmployees() {
+        return employees;
+    }
+
+    @PostConstruct
+    public void init() {
         List<Employee> persons = new ArrayList<>(List.of(
                 new Employee("Bill", "Gates", 1, 100000),
                 new Employee("Steve", "Jobs", 2, 120000),
@@ -23,8 +34,7 @@ public class AppConfig {
                 new Employee("Tim", "Cook", 1, 140000),
                 new Employee("Eric", "Schmidt", 1, 135000)
         ));
-
-        return persons.stream()
+        employees = persons.stream()
                 .collect(Collectors.toMap(Employee::getFullNameKey, employee -> employee));
     }
 }
