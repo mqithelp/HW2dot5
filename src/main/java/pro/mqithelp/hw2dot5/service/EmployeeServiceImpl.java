@@ -7,6 +7,9 @@ import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isAlpha;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private String fullNameKey = "";
@@ -19,6 +22,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String removeEmployee(String name, String surname) {
+        if (isAlpha(name) && isAlpha(surname)) {
+            name.toLowerCase();
+            surname.toLowerCase();
+            name = capitalize(name);
+            surname = capitalize(surname);
+        } else {
+            throw new RuntimeException("400 Bad Request");
+        }
+
         setFullNameKey(name, surname);
         if (employees.getEmployees().containsKey(fullNameKey)) {
             employees.getEmployees().remove(fullNameKey);
@@ -30,6 +42,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String addEmployee(String name, String surname) {
+        if (isAlpha(name) && isAlpha(surname)) {
+            name.toLowerCase();
+            surname.toLowerCase();
+            name = capitalize(name);
+            surname = capitalize(surname);
+        } else {
+            throw new RuntimeException("400 Bad Request");
+        }
+
         if (employees.getEmployees().size() >= MAX_EMPLYEE) {
             throw new EmployeeArrayIsFull();
         }
@@ -44,6 +65,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String findEmployee(String name, String surname) {
+        if (isAlpha(name) && isAlpha(surname)) {
+            name.toLowerCase();
+            surname.toLowerCase();
+            name = capitalize(name);
+            surname = capitalize(surname);
+        } else {
+            throw new RuntimeException("400 Bad Request");
+        }
+
         setFullNameKey(name, surname);
         if (employees.getEmployees().containsKey(fullNameKey)) {
             return "Сотрудник найден:\n" + new Gson().toJson(fullNameKey) + "\n" + allEmployee();
