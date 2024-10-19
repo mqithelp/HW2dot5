@@ -74,4 +74,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         return "Минимальная зарплата в отделе " + departmentId + " у " + salaryList.get(0) + " - \n " + result;
     }
 
+    @Override
+    public Integer getSumByDepartment(Integer departmentId) {
+        Integer result;
+        result = departments.getEmployees().values()
+                .stream()
+                .filter(e -> e.getDepartmentId() == departmentId)
+                .mapToInt(Employee::getSalary)
+                .sum();
+
+        if (result <= 0) {
+            throw new EmployeeDepartmentNotFoundException();
+        }
+        return result;
+    }
+
 }

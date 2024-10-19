@@ -8,4 +8,5 @@ public interface DepartmentService {
     String getMaxSalaryByDepartment(Integer departmentId);
 
     String getMinSalaryByDepartment(Integer departmentId);
+    Integer getSumByDepartment(Integer departmentId);
 }
