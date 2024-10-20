@@ -25,7 +25,6 @@ public class DepartmentController {
         return departmentService.getAll();
     }
 
-
     @GetMapping("/{id}/salary/sum")
     public String getSumSalaryByDepartment(@PathVariable("id") Integer departmentId) {
         try {
