@@ -1,12 +1,16 @@
 package pro.mqithelp.hw2dot5.service;
 
+import java.util.List;
+import java.util.Map;
+
 public interface DepartmentService {
-    String getAll();
+    Map<String, Employee> getAll();
 
-    String getAll(Integer departmentId);
+    List<Employee> getAll(Integer departmentId);
 
-    String getMaxSalaryByDepartment(Integer departmentId);
+    Integer getMaxSalaryByDepartment(Integer departmentId);
 
-    String getMinSalaryByDepartment(Integer departmentId);
+    Integer getMinSalaryByDepartment(Integer departmentId);
     Integer getSumByDepartment(Integer departmentId);
+
 }

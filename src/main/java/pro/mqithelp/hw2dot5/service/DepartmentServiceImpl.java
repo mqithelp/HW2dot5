@@ -6,6 +6,7 @@ import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,15 +18,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public String getAll() {
-        return departments.getEmployees().values()
-                .stream()
-                .sorted(Comparator.comparingInt(Employee::getDepartmentId))
-                .collect(Collectors.groupingBy(Employee::getDepartmentId, Collectors.mapping(Employee::getByDepartment, Collectors.joining()))).toString();
+    public Map<String, Employee> getAll() {
+        return departments.getEmployees();
     }
 
     @Override
-    public String getAll(Integer departmentId) {
+    public List<Employee> getAll(Integer departmentId) {
         List<Employee> salaryList =
                 departments.getEmployees().values()
                         .stream()
@@ -36,29 +34,26 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (salaryList.isEmpty()) {
             throw new EmployeeDepartmentNotFoundException();
         }
-        return "Сотрудники отдела " + departmentId + ":\n" + salaryList;
+        return salaryList;
 
     }
 
     @Override
-    public String getMaxSalaryByDepartment(Integer departmentId) {
+    public Integer getMaxSalaryByDepartment(Integer departmentId) {
         int indexMaxSalary;
-        String result;
-        List<Employee> salaryList =
-                departments.getEmployees().values()
-                        .stream()
-                        .filter(e -> e.getDepartmentId() == departmentId)
-                        .sorted(Comparator.comparingInt(Employee::getSalary))
-                        .toList();
+        List<Employee> salaryList = departments.getEmployees().values()
+                .stream()
+                .filter(e -> e.getDepartmentId() == departmentId)
+                .sorted(Comparator.comparingInt(Employee::getSalary))
+                .toList();
 
         if (salaryList.isEmpty()) throw new EmployeeDepartmentNotFoundException();
         indexMaxSalary = salaryList.size() - 1;
-        result = "Сотрудники отдела " + departmentId + ":\n" + salaryList;
-        return "Максимальная зарплата в отделе " + departmentId + " у " + salaryList.get(indexMaxSalary) + " - \n " + result;
+        return salaryList.get(indexMaxSalary).getSalary();
     }
 
     @Override
-    public String getMinSalaryByDepartment(Integer departmentId) {
+    public Integer getMinSalaryByDepartment(Integer departmentId) {
         String result;
         List<Employee> salaryList =
                 departments.getEmployees().values()
@@ -70,8 +65,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (salaryList.isEmpty()) {
             throw new EmployeeDepartmentNotFoundException();
         }
-        result = "Сотрудники отдела " + departmentId + ":\n" + salaryList;
-        return "Минимальная зарплата в отделе " + departmentId + " у " + salaryList.get(0) + " - \n " + result;
+        return salaryList.get(0).getSalary();
     }
 
     @Override
