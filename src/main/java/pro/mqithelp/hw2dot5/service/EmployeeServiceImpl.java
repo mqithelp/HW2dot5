@@ -41,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String addEmployee(String name, String surname) {
+    public boolean addEmployee(String name, String surname) {
         if (isAlpha(name) && isAlpha(surname)) {
             name.toLowerCase();
             surname.toLowerCase();
@@ -58,7 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!employees.getEmployees().containsKey(fullNameKey)) {
             Employee person = new Employee(name, surname);
             employees.getEmployees().put(fullNameKey, person);
-            return "Сотрудник добавлен:\n" + new Gson().toJson(person) + "\n" + allEmployee();
+            return true;
         }
         throw new EmployeeAlreadyAddedException();
     }

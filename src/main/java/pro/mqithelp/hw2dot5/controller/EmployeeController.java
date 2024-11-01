@@ -24,37 +24,30 @@ public class EmployeeController {
     }
 
     @GetMapping("add")
-    public String add(@RequestParam("firstName") String name,
-                      @RequestParam("lastName") String surname) {
-        try {
-            return employeeService.addEmployee(name, surname);
-
-        } catch (EmployeeAlreadyAddedException e) {
-            return "Сотрудник уже есть.\n";
-        } catch (EmployeeArrayIsFull e) {
-            return "В базе нет места.";
-        }
-    }
-
-    @GetMapping("remove")
-    public String remove(
-            @RequestParam("firstName") String name,
-            @RequestParam("lastName") String surname) {
-        try {
-            return employeeService.removeEmployee(name, surname);
-        } catch (EmployeeNotFoundException e) {
-            return "Сотрудник не найден. \n";
-        }
-    }
-
-    @GetMapping("find")
-    public String find(@RequestParam("firstName") String name,
+    public boolean add(@RequestParam("firstName") String name,
                        @RequestParam("lastName") String surname) {
-        try {
-            return employeeService.findEmployee(name, surname);
-        } catch (EmployeeNotFoundException e) {
-            return "Сотрудник не найден. \n";
-        }
+        return employeeService.addEmployee(name, surname);
+}
+
+@GetMapping("remove")
+public String remove(
+        @RequestParam("firstName") String name,
+        @RequestParam("lastName") String surname) {
+    try {
+        return employeeService.removeEmployee(name, surname);
+    } catch (EmployeeNotFoundException e) {
+        return "Сотрудник не найден. \n";
     }
+}
+
+@GetMapping("find")
+public String find(@RequestParam("firstName") String name,
+                   @RequestParam("lastName") String surname) {
+    try {
+        return employeeService.findEmployee(name, surname);
+    } catch (EmployeeNotFoundException e) {
+        return "Сотрудник не найден. \n";
+    }
+}
 
 }
