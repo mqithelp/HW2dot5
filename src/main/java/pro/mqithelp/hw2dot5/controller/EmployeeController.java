@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
+import pro.mqithelp.hw2dot5.service.Employee;
 import pro.mqithelp.hw2dot5.service.EmployeeService;
 
 @RestController
@@ -41,13 +42,8 @@ public String remove(
 }
 
 @GetMapping("find")
-public String find(@RequestParam("firstName") String name,
-                   @RequestParam("lastName") String surname) {
-    try {
+public Employee find(@RequestParam("firstName") String name,
+                     @RequestParam("lastName") String surname) {
         return employeeService.findEmployee(name, surname);
-    } catch (EmployeeNotFoundException e) {
-        return "Сотрудник не найден. \n";
     }
-}
-
 }

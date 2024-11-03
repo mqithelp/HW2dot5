@@ -7,7 +7,7 @@ public interface EmployeeService {
 
     boolean addEmployee(String name, String surname);
 
-    String findEmployee(String name, String surname);
+    Employee findEmployee(String name, String surname);
 
     String allEmployee();
 

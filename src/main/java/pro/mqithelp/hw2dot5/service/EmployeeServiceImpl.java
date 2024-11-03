@@ -22,32 +22,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String removeEmployee(String name, String surname) {
-        if (isAlpha(name) && isAlpha(surname)) {
-            name.toLowerCase();
-            surname.toLowerCase();
-            name = capitalize(name);
-            surname = capitalize(surname);
-        } else {
+        if (!(isAlpha(name) && isAlpha(surname))) {
             throw new RuntimeException("400 Bad Request");
         }
-
         setFullNameKey(name, surname);
         if (employees.getEmployees().containsKey(fullNameKey)) {
             employees.getEmployees().remove(fullNameKey);
             return "Сотрудник " + fullNameKey + " удалён. \n" + allEmployee();
         }
-        throw new EmployeeNotFoundException();
+        throw new EmployeeNotFoundException("Сотрудник не найден");
 
     }
 
     @Override
     public boolean addEmployee(String name, String surname) {
-        if (isAlpha(name) && isAlpha(surname)) {
-            name.toLowerCase();
-            surname.toLowerCase();
-            name = capitalize(name);
-            surname = capitalize(surname);
-        } else {
+        if (!(isAlpha(name) && isAlpha(surname))) {
             throw new RuntimeException("400 Bad Request");
         }
 
@@ -64,21 +53,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String findEmployee(String name, String surname) {
-        if (isAlpha(name) && isAlpha(surname)) {
-            name.toLowerCase();
-            surname.toLowerCase();
-            name = capitalize(name);
-            surname = capitalize(surname);
-        } else {
-            throw new RuntimeException("400 Bad Request");
+    public Employee findEmployee(String name, String surname) {
+        if (!(isAlpha(name) && isAlpha(surname))) {
+            throw new RuntimeException("400 Bad Request. Имя и фамилия должны содержать только буквы.");
         }
-
         setFullNameKey(name, surname);
         if (employees.getEmployees().containsKey(fullNameKey)) {
-            return "Сотрудник найден:\n" + new Gson().toJson(fullNameKey) + "\n" + allEmployee();
+            return employees.getEmployees().get(fullNameKey);
         }
-        throw new EmployeeNotFoundException();
+        throw new EmployeeNotFoundException("Сотрудник не найден." + name + " " + surname);
     }
 
     @Override
