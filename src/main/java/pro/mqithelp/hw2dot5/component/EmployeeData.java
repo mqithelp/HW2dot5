@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class EmployeeData {
-  private Map<String, Employee> employees;
-//    private Map<String, Employee> employees = new HashMap<>();
+
+    private Map<String, Employee> employees = new HashMap<>();
 
 
     public Map<String, Employee> getEmployees() {

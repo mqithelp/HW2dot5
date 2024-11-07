@@ -1,47 +1,62 @@
 package pro.mqithelp.hw2dot5.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.mqithelp.hw2dot5.exception.EmployeeDepartmentNotFoundException;
 import pro.mqithelp.hw2dot5.service.DepartmentService;
+import pro.mqithelp.hw2dot5.service.Employee;
+
+import java.util.Collection;
+import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/departments")
+@RequestMapping(path = "/department")
 public class DepartmentController {
-private final DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("max-salary")
-    public String getMaxSalary(@RequestParam("departmentId") Integer departmentId) {
-        try {
-            return departmentService.getMaxSalaryByDepartment(departmentId);
-        } catch (EmployeeDepartmentNotFoundException e) {
-            return "Департамент не найден.";
-        }
-    }
-    @GetMapping("min-salary")
-    public String getMinSalary(@RequestParam("departmentId") Integer departmentId) {
-        try {
-            return departmentService.getMinSalaryByDepartment(departmentId);
-        } catch (EmployeeDepartmentNotFoundException e) {
-            return "Департамент не найден.";
+    @GetMapping("/{id}/employees")
+    public Collection<Employee> getByID(@PathVariable(value = "id", required = false) Integer departmentId) {
+        if (departmentId != null) {
+            return departmentService.getAll(departmentId);
+        } else {
+            throw new EmployeeDepartmentNotFoundException();
         }
     }
 
-    @GetMapping("all")
-    public String getAll(@RequestParam(value = "departmentId", required = false) Integer departmentId) {
+    @GetMapping("/{id}/salary/sum")
+    public Integer getSumSalaryByDepartment(@PathVariable("id") Integer departmentId) {
         if (departmentId != null) {
-            try {
-                return departmentService.getAll(departmentId);
-            } catch (EmployeeDepartmentNotFoundException e) {
-                return "Департамент не найден.";
-            }
+            return departmentService.getSumByDepartment(departmentId);
+        } else {
+            throw new EmployeeDepartmentNotFoundException();
         }
+    }
+
+    @GetMapping("{id}/salary/max")
+    public Integer getMaxSalary(@PathVariable("id") Integer departmentId) {
+        if (departmentId != null) {
+            return departmentService.getMaxSalaryByDepartment(departmentId);
+        } else {
+            throw new EmployeeDepartmentNotFoundException();
+        }
+    }
+
+    @GetMapping("{id}/salary/min")
+    public Integer getMinSalary(@PathVariable("id") Integer departmentId) {
+        if (departmentId != null) {
+            return departmentService.getMinSalaryByDepartment(departmentId);
+        } else {
+            throw new EmployeeDepartmentNotFoundException();
+        }
+
+    }
+
+    @GetMapping("/employees")
+    public Map<String, Employee> getAll() {
         return departmentService.getAll();
     }
+
 }

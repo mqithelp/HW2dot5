@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.mqithelp.hw2dot5.exception.EmployeeAlreadyAddedException;
 import pro.mqithelp.hw2dot5.exception.EmployeeArrayIsFull;
 import pro.mqithelp.hw2dot5.exception.EmployeeNotFoundException;
+import pro.mqithelp.hw2dot5.service.Employee;
 import pro.mqithelp.hw2dot5.service.EmployeeService;
 
 @RestController
@@ -24,37 +25,25 @@ public class EmployeeController {
     }
 
     @GetMapping("add")
-    public String add(@RequestParam("firstName") String name,
-                      @RequestParam("lastName") String surname) {
-        try {
-            return employeeService.addEmployee(name, surname);
-
-        } catch (EmployeeAlreadyAddedException e) {
-            return "Сотрудник уже есть.\n";
-        } catch (EmployeeArrayIsFull e) {
-            return "В базе нет места.";
-        }
-    }
-
-    @GetMapping("remove")
-    public String remove(
-            @RequestParam("firstName") String name,
-            @RequestParam("lastName") String surname) {
-        try {
-            return employeeService.removeEmployee(name, surname);
-        } catch (EmployeeNotFoundException e) {
-            return "Сотрудник не найден. \n";
-        }
-    }
-
-    @GetMapping("find")
-    public String find(@RequestParam("firstName") String name,
+    public boolean add(@RequestParam("firstName") String name,
                        @RequestParam("lastName") String surname) {
-        try {
-            return employeeService.findEmployee(name, surname);
-        } catch (EmployeeNotFoundException e) {
-            return "Сотрудник не найден. \n";
-        }
-    }
+        return employeeService.addEmployee(name, surname);
+}
 
+@GetMapping("remove")
+public String remove(
+        @RequestParam("firstName") String name,
+        @RequestParam("lastName") String surname) {
+    try {
+        return employeeService.removeEmployee(name, surname);
+    } catch (EmployeeNotFoundException e) {
+        return "Сотрудник не найден. \n";
+    }
+}
+
+@GetMapping("find")
+public Employee find(@RequestParam("firstName") String name,
+                     @RequestParam("lastName") String surname) {
+        return employeeService.findEmployee(name, surname);
+    }
 }
